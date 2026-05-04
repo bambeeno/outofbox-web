@@ -1,0 +1,568 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Out of Box TechSolutions — Soluciones tecnológicas que funcionan.</title>
+<link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=Rajdhani:wght@400;500;600;700&family=Exo+2:ital,wght@0,300;0,400;0,600;1,300&display=swap" rel="stylesheet" />
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --black: #000000;
+    --amber: #FEB71B;
+    --amber2: #F68F0B;
+    --orange: #FF751F;
+    --teal: #0097B2;
+    --white: #ffffff;
+    --gray: #1a1a1a;
+    --gray-mid: #2a2a2a;
+    --text-muted: #888888;
+    --grid-color: rgba(254,183,27,0.06);
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'Exo 2', sans-serif;
+    background: var(--black);
+    color: var(--white);
+    overflow-x: hidden;
+  }
+
+  /* GRID BACKGROUND */
+  body::before {
+    content: '';
+    position: fixed; top: 0; left: 0; right: 0; bottom: 0;
+    background-image:
+      linear-gradient(var(--grid-color) 1px, transparent 1px),
+      linear-gradient(90deg, var(--grid-color) 1px, transparent 1px);
+    background-size: 60px 60px;
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  /* NAV */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 1rem 3rem;
+    background: rgba(0,0,0,0.85);
+    backdrop-filter: blur(16px);
+    border-bottom: 1px solid rgba(254,183,27,0.15);
+  }
+
+  .logo-wrap { display: flex; align-items: center; gap: 12px; text-decoration: none; }
+  .logo-wrap img { height: 44px; width: auto; }
+
+  nav ul { list-style: none; display: flex; gap: 2.5rem; align-items: center; }
+  nav ul a {
+    text-decoration: none;
+    font-family: 'Rajdhani', sans-serif;
+    font-size: 15px; font-weight: 600;
+    color: var(--text-muted);
+    letter-spacing: 1px; text-transform: uppercase;
+    transition: color 0.2s;
+  }
+  nav ul a:hover { color: var(--amber); }
+
+  .nav-cta {
+    background: var(--orange) !important;
+    color: var(--white) !important;
+    padding: 0.5rem 1.4rem;
+    border-radius: 4px;
+    font-size: 13px !important;
+    transition: background 0.2s !important;
+  }
+  .nav-cta:hover { background: var(--amber2) !important; }
+
+  /* HERO */
+  .hero {
+    min-height: 100vh;
+    display: flex; flex-direction: column; justify-content: center; align-items: center;
+    padding: 6rem 3rem 4rem;
+    position: relative; z-index: 1;
+    text-align: center;
+  }
+
+  .hero-tag {
+    display: inline-flex; align-items: center; gap: 8px;
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 12px; color: var(--teal);
+    letter-spacing: 3px; text-transform: uppercase;
+    margin-bottom: 2rem;
+  }
+  .hero-tag::before, .hero-tag::after {
+    content: ''; width: 40px; height: 1px; background: var(--teal); opacity: 0.5;
+  }
+
+  .hero-title {
+    font-family: 'Rajdhani', sans-serif;
+    font-size: clamp(2.8rem, 7vw, 6rem);
+    font-weight: 700; line-height: 1.05;
+    color: var(--white);
+    margin-bottom: 1.5rem;
+  }
+  .hero-title .accent { color: var(--amber); }
+  .hero-title .accent2 { color: var(--orange); }
+
+  .hero-sub {
+    font-size: 17px; line-height: 1.7;
+    color: var(--text-muted);
+    max-width: 580px; margin: 0 auto 3rem;
+    font-weight: 300;
+  }
+
+  .hero-buttons { display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; }
+
+  .btn-primary {
+    padding: 0.85rem 2.2rem;
+    background: var(--amber); color: var(--black);
+    border: none; border-radius: 4px;
+    font-family: 'Rajdhani', sans-serif;
+    font-size: 15px; font-weight: 700;
+    letter-spacing: 1px; text-transform: uppercase;
+    cursor: pointer; transition: background 0.2s, transform 0.15s;
+    text-decoration: none; display: inline-block;
+  }
+  .btn-primary:hover { background: var(--amber2); transform: translateY(-2px); }
+
+  .btn-outline {
+    padding: 0.85rem 2.2rem;
+    background: transparent; color: var(--teal);
+    border: 1px solid var(--teal);
+    border-radius: 4px;
+    font-family: 'Rajdhani', sans-serif;
+    font-size: 15px; font-weight: 600;
+    letter-spacing: 1px; text-transform: uppercase;
+    cursor: pointer; transition: all 0.2s;
+    text-decoration: none; display: inline-block;
+  }
+  .btn-outline:hover { background: rgba(0,151,178,0.1); }
+
+  /* TICKER */
+  .ticker {
+    background: var(--amber);
+    padding: 0.6rem 0;
+    overflow: hidden;
+    position: relative; z-index: 1;
+  }
+  .ticker-inner {
+    display: flex; gap: 4rem;
+    animation: ticker 22s linear infinite;
+    white-space: nowrap;
+  }
+  .ticker-inner span {
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 12px; font-weight: 700;
+    color: var(--black); letter-spacing: 2px; text-transform: uppercase;
+  }
+  @keyframes ticker {
+    0% { transform: translateX(0); }
+    100% { transform: translateX(-50%); }
+  }
+
+  /* SECTIONS */
+  section { position: relative; z-index: 1; }
+
+  .section-tag {
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 11px; letter-spacing: 3px; text-transform: uppercase;
+    color: var(--teal); margin-bottom: 1rem; display: block;
+  }
+
+  .section-title {
+    font-family: 'Rajdhani', sans-serif;
+    font-size: clamp(2rem, 4vw, 3rem); font-weight: 700;
+    color: var(--white); line-height: 1.1; margin-bottom: 1.2rem;
+  }
+  .section-title .acc { color: var(--amber); }
+
+  .section-sub {
+    font-size: 15px; line-height: 1.8;
+    color: var(--text-muted); max-width: 540px;
+  }
+
+  /* PRODUCTS */
+  .products { padding: 7rem 3rem; }
+
+  .products-header { margin-bottom: 4rem; }
+
+  .products-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.5rem;
+  }
+
+  .prod-card {
+    background: var(--gray);
+    border: 1px solid rgba(254,183,27,0.12);
+    border-radius: 8px;
+    padding: 2rem;
+    position: relative;
+    transition: border-color 0.3s, transform 0.25s;
+    overflow: hidden;
+  }
+  .prod-card::before {
+    content: '';
+    position: absolute; top: 0; left: 0; right: 0; height: 3px;
+    background: var(--amber);
+    transform: scaleX(0); transform-origin: left;
+    transition: transform 0.3s;
+  }
+  .prod-card:hover { border-color: rgba(254,183,27,0.35); transform: translateY(-4px); }
+  .prod-card:hover::before { transform: scaleX(1); }
+
+  .prod-card.coming-soon {
+    opacity: 0.65;
+  }
+  .prod-card.coming-soon::before { background: var(--teal); }
+
+  .prod-badge {
+    display: inline-block;
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 10px; letter-spacing: 2px; text-transform: uppercase;
+    padding: 0.25rem 0.7rem;
+    border-radius: 2px; margin-bottom: 1.2rem;
+  }
+  .badge-live { background: rgba(254,183,27,0.15); color: var(--amber); border: 1px solid rgba(254,183,27,0.3); }
+  .badge-soon { background: rgba(0,151,178,0.1); color: var(--teal); border: 1px solid rgba(0,151,178,0.25); }
+
+  .prod-name {
+    font-family: 'Rajdhani', sans-serif;
+    font-size: 1.6rem; font-weight: 700;
+    color: var(--white); margin-bottom: 0.3rem;
+  }
+  .prod-name .pro { color: var(--orange); }
+
+  .prod-desc {
+    font-size: 13px; color: var(--text-muted);
+    margin-bottom: 1.4rem; line-height: 1.6;
+  }
+
+  .prod-features { list-style: none; display: flex; flex-direction: column; gap: 0.6rem; }
+  .prod-features li {
+    font-size: 13px; color: #bbb;
+    display: flex; align-items: flex-start; gap: 8px;
+  }
+  .prod-features li::before {
+    content: '▸'; color: var(--amber); flex-shrink: 0; font-size: 11px; margin-top: 2px;
+  }
+  .coming-soon .prod-features li::before { color: var(--teal); }
+
+  .prod-cta {
+    display: inline-flex; align-items: center; gap: 6px;
+    margin-top: 1.5rem;
+    font-family: 'Rajdhani', sans-serif;
+    font-size: 13px; font-weight: 600;
+    letter-spacing: 1px; text-transform: uppercase;
+    color: var(--amber); text-decoration: none;
+    transition: gap 0.2s;
+  }
+  .prod-cta:hover { gap: 10px; }
+
+  .prod-philosophy {
+    margin-top: 3rem;
+    padding: 1.5rem 2rem;
+    border-left: 3px solid var(--orange);
+    background: rgba(255,117,31,0.05);
+    border-radius: 0 6px 6px 0;
+  }
+  .prod-philosophy p {
+    font-family: 'Exo 2', sans-serif;
+    font-style: italic; font-size: 15px;
+    color: #ccc; line-height: 1.7;
+  }
+  .prod-philosophy strong { color: var(--orange); font-style: normal; }
+
+  /* ABOUT */
+  .about {
+    padding: 7rem 3rem;
+    background: var(--gray);
+    border-top: 1px solid rgba(254,183,27,0.08);
+    border-bottom: 1px solid rgba(254,183,27,0.08);
+  }
+
+  .about-grid {
+    display: grid;
+    grid-template-columns: 1fr 1.4fr;
+    gap: 5rem; align-items: center;
+  }
+
+  .about-left .big-number {
+    font-family: 'Rajdhani', sans-serif;
+    font-size: 8rem; font-weight: 700; line-height: 1;
+    color: rgba(254,183,27,0.08);
+    position: absolute;
+    pointer-events: none;
+  }
+
+  .about-values {
+    display: flex; flex-direction: column; gap: 1rem;
+    margin-top: 2rem;
+  }
+  .about-val {
+    display: flex; align-items: center; gap: 10px;
+    font-family: 'Rajdhani', sans-serif;
+    font-size: 14px; font-weight: 600;
+    letter-spacing: 1px; text-transform: uppercase;
+    color: var(--text-muted);
+  }
+  .about-val .dot {
+    width: 8px; height: 8px; border-radius: 50%;
+    background: var(--amber); flex-shrink: 0;
+  }
+
+  .about-text { font-size: 15px; line-height: 1.9; color: #bbb; }
+  .about-text p { margin-bottom: 1.2rem; }
+  .about-text p:last-child { margin-bottom: 0; }
+
+  /* CTA */
+  .cta-section {
+    padding: 7rem 3rem; text-align: center;
+  }
+
+  .cta-section h2 {
+    font-family: 'Rajdhani', sans-serif;
+    font-size: clamp(2rem, 5vw, 3.5rem); font-weight: 700;
+    color: var(--white); line-height: 1.1; margin-bottom: 1rem;
+  }
+  .cta-section h2 .acc { color: var(--amber); }
+
+  .cta-section p {
+    font-size: 15px; color: var(--text-muted); margin-bottom: 2.5rem;
+  }
+
+  /* FOOTER */
+  footer {
+    background: #050505;
+    padding: 2.5rem 3rem;
+    display: flex; justify-content: space-between; align-items: center;
+    border-top: 1px solid rgba(254,183,27,0.1);
+  }
+
+  .footer-logo img { height: 32px; width: auto; }
+
+  .footer-links { display: flex; gap: 2rem; }
+  .footer-links a {
+    font-family: 'Rajdhani', sans-serif;
+    font-size: 13px; font-weight: 600;
+    letter-spacing: 1px; text-transform: uppercase;
+    color: var(--text-muted); text-decoration: none; transition: color 0.2s;
+  }
+  .footer-links a:hover { color: var(--amber); }
+
+  footer p {
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 11px; color: var(--text-muted); opacity: 0.5;
+  }
+
+  /* STRIPE */
+  .stripe-bar {
+    height: 5px;
+    background: linear-gradient(90deg,
+      var(--amber) 0%, var(--amber) 33%,
+      var(--amber2) 33%, var(--amber2) 66%,
+      var(--teal) 66%, var(--teal) 100%
+    );
+  }
+
+  /* ANIMATIONS */
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(28px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  .anim { opacity: 0; animation: fadeUp 0.7s ease forwards; }
+  .d1 { animation-delay: 0.1s; }
+  .d2 { animation-delay: 0.3s; }
+  .d3 { animation-delay: 0.5s; }
+  .d4 { animation-delay: 0.7s; }
+  .d5 { animation-delay: 0.9s; }
+
+  /* BLINK cursor */
+  @keyframes blink { 0%,100%{opacity:1} 50%{opacity:0} }
+  .cursor { display: inline-block; width: 3px; height: 1em; background: var(--amber); vertical-align: middle; margin-left: 4px; animation: blink 1s step-end infinite; }
+
+  /* RESPONSIVE */
+  @media (max-width: 900px) {
+    nav { padding: 1rem 1.5rem; }
+    nav ul { display: none; }
+    .products-grid { grid-template-columns: 1fr; }
+    .about-grid { grid-template-columns: 1fr; gap: 3rem; }
+    .hero { padding: 5rem 1.5rem 3rem; }
+    footer { flex-direction: column; gap: 1.5rem; text-align: center; }
+  }
+</style>
+</head>
+<body>
+
+<div class="stripe-bar"></div>
+
+<!-- NAV -->
+<nav>
+  <a class="logo-wrap" href="#">
+    <img src="./Out_of_box.png" alt="Out of Box TechSolutions" />
+  </a>
+  <ul>
+    <li><a href="#productos">Productos</a></li>
+    <li><a href="#nosotros">Nosotros</a></li>
+    <li><a href="#contacto">Contacto</a></li>
+    <li><a class="nav-cta" href="#contacto">Hablemos</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <span class="hero-tag anim d1">Out of Box TechSolutions</span>
+  <h1 class="hero-title anim d2">
+    Soluciones tecnológicas<br>
+    que <span class="accent">funcionan.</span>
+  </h1>
+  <p class="hero-sub anim d3">
+    Tecnología aplicada a problemas reales de negocio. Software a medida, resultados concretos.
+  </p>
+  <div class="hero-buttons anim d4">
+    <a class="btn-primary" href="#productos">Ver productos</a>
+    <a class="btn-outline" href="#nosotros">Quiénes somos</a>
+  </div>
+</section>
+
+<!-- TICKER -->
+<div class="ticker">
+  <div class="ticker-inner">
+    <span>Gestión clínica</span>
+    <span>▸</span>
+    <span>Academias</span>
+    <span>▸</span>
+    <span>Talleres y oficios</span>
+    <span>▸</span>
+    <span>Automatización</span>
+    <span>▸</span>
+    <span>Software a medida</span>
+    <span>▸</span>
+    <span>Resultados reales</span>
+    <span>▸</span>
+    <span>Gestión clínica</span>
+    <span>▸</span>
+    <span>Academias</span>
+    <span>▸</span>
+    <span>Talleres y oficios</span>
+    <span>▸</span>
+    <span>Automatización</span>
+    <span>▸</span>
+    <span>Software a medida</span>
+    <span>▸</span>
+    <span>Resultados reales</span>
+    <span>▸</span>
+  </div>
+</div>
+
+<!-- PRODUCTS -->
+<section class="products" id="productos">
+  <div class="products-header">
+    <span class="section-tag">/ Productos</span>
+    <h2 class="section-title">Software que se <span class="acc">adapta</span> al negocio.</h2>
+    <p class="section-sub">Cada sistema está construido para resolver un problema real. No imponemos herramientas, diseñamos soluciones.</p>
+  </div>
+
+  <div class="products-grid">
+
+    <!-- ClinicPro -->
+    <div class="prod-card">
+      <span class="prod-badge badge-live">● Disponible</span>
+      <div class="prod-name">Clinic<span class="pro">Pro</span></div>
+      <p class="prod-desc">Sistema de gestión para consultorios y clínicas</p>
+      <ul class="prod-features">
+        <li>Turnos, pacientes e historial clínico en un solo lugar</li>
+        <li>Automatización de recordatorios y comunicación</li>
+        <li>Gestión administrativa y facturación</li>
+        <li>Adaptado a la forma de trabajo de cada consultorio</li>
+      </ul>
+      <a class="prod-cta" href="https://clinicpro.outofbox.tech">Conocer ClinicPro →</a>
+    </div>
+
+    <!-- Class Manager -->
+    <div class="prod-card coming-soon">
+      <span class="prod-badge badge-soon">◎ Próximamente</span>
+      <div class="prod-name">Class<span style="color:var(--teal)">Manager</span></div>
+      <p class="prod-desc">Sistema de gestión para academias y centros educativos</p>
+      <ul class="prod-features">
+        <li>Inscripciones, alumnos y clases</li>
+        <li>Control de pagos y asistencia</li>
+        <li>Comunicación con estudiantes</li>
+        <li>Adaptado a cada institución</li>
+      </ul>
+    </div>
+
+    <!-- WorkshopPro -->
+    <div class="prod-card coming-soon">
+      <span class="prod-badge badge-soon">◎ Próximamente</span>
+      <div class="prod-name">Workshop<span style="color:var(--teal)">Pro</span></div>
+      <p class="prod-desc">Sistema de gestión para talleres y oficios</p>
+      <ul class="prod-features">
+        <li>Órdenes de trabajo y seguimiento</li>
+        <li>Control de clientes y servicios</li>
+        <li>Gestión operativa diaria</li>
+        <li>Personalizado según el rubro</li>
+      </ul>
+    </div>
+
+  </div>
+
+  <div class="prod-philosophy">
+    <p><strong>Cada sistema se adapta al negocio.</strong> No trabajamos con soluciones rígidas.</p>
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section class="about" id="nosotros">
+  <div class="about-grid">
+    <div class="about-left">
+      <span class="section-tag">/ Nosotros</span>
+      <h2 class="section-title">Enfoque <span class="acc">práctico.</span><br>Resultados concretos.</h2>
+      <div class="about-values">
+        <div class="about-val"><span class="dot"></span>Análisis de procesos</div>
+        <div class="about-val"><span class="dot"></span>Desarrollo de software</div>
+        <div class="about-val"><span class="dot"></span>Automatización</div>
+        <div class="about-val"><span class="dot"></span>Lógica operativa</div>
+        <div class="about-val"><span class="dot"></span>Compromiso a largo plazo</div>
+      </div>
+    </div>
+    <div class="about-text">
+      <p>Somos un equipo enfocado en desarrollar soluciones tecnológicas que resuelven problemas reales de negocio.</p>
+      <p>Trabajamos combinando desarrollo de software, análisis de procesos, automatización y lógica operativa para construir sistemas que realmente se usan en el día a día.</p>
+      <p>Venimos de distintos ámbitos y experiencias, lo que nos permite entender cómo funcionan los negocios más allá del código. No buscamos imponer herramientas, sino diseñar soluciones que se adapten a cada operación.</p>
+      <p>Nos involucramos en cada proyecto como parte del equipo, con un enfoque práctico: entender el problema, simplificarlo y construir una solución que funcione.</p>
+      <p>Estamos en una etapa de crecimiento, enfocados en hacer bien el trabajo, mejorar cada implementación y construir relaciones a largo plazo con quienes confían en nosotros.</p>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section class="cta-section" id="contacto">
+  <span class="section-tag" style="display:block;text-align:center;margin-bottom:1rem;">/ Contacto</span>
+  <h2>¿Tenés un problema de negocio<br>que <span class="acc">la tecnología puede resolver?</span></h2>
+  <p>Contanos de qué se trata. Sin compromiso.</p>
+  <div class="hero-buttons">
+    <a class="btn-primary" href="mailto:hola@outofbox.tech">Escribinos</a>
+    <a class="btn-outline" href="https://clinicpro.outofbox.tech">Ver ClinicPro</a>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-logo">
+    <img src="./Out_of_box.png" alt="Out of Box TechSolutions" />
+  </div>
+  <div class="footer-links">
+    <a href="#productos">Productos</a>
+    <a href="#nosotros">Nosotros</a>
+    <a href="#contacto">Contacto</a>
+  </div>
+  <p>© 2026 Out of Box TechSolutions</p>
+</footer>
+
+<div class="stripe-bar"></div>
+
+</body>
+</html>
